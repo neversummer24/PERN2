@@ -67,7 +67,7 @@ export const addTransaction = async (req, res) => {
         await pool.query("UPDATE tblaccount SET account_balance = (account_balance - $1), updatedat = CURRENT_TIMESTAMP WHERE id = $2 RETURNING *",
         [amount, account_id]);
 
-        await pool.query(`INSERT INTO tbltransaction(user_id, description, type, status, amount, source) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+        await pool.query(`INSERT INTO tbltransaction(user_id, description, type, status, amount, source) VALUES($1, $2, $3, $4, $5, $6) RETURNING *`,
         [userId, description, "expense", "Completed", amount, source]);
         
         await pool.query("COMMIT")
@@ -80,15 +80,14 @@ export const addTransaction = async (req, res) => {
         const status = "Completed"; 
 
         const transactionQuery = {
-          text: `INSERT INTO tbltransaction(user_id, description, type, status, amount, source, account_id) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+          text: `INSERT INTO tbltransaction(user_id, description, type, status, amount, source) VALUES($1, $2, $3, $4, $5, $6) RETURNING *`,
           values: [
                     userId,
                     description,
                     type,
                     status,
                     amount,
-                    source,
-                    account_id
+                    source
                   ],
         };
         const result = await pool.query(transactionQuery);
@@ -152,12 +151,12 @@ export const transferMoneyToAccount = async (req, res) => {
         await pool.query("UPDATE tblaccount SET account_balance = (account_balance + $1), updatedat = CURRENT_TIMESTAMP WHERE id = $2 RETURNING *",
         [amount, to_account_id]);
 
-        await pool.query(`INSERT INTO tbltransaction(user_id, description, type, status, amount, source) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+        await pool.query(`INSERT INTO tbltransaction(user_id, description, type, status, amount, source) VALUES($1, $2, $3, $4, $5, $6) RETURNING *`,
         [userId, description, "expense", status, amount, source]);
 
         description = `Received from ${source} to ${toAccountInfo.account_name}`;
 
-        await pool.query(`INSERT INTO tbltransaction(user_id, description, type, status, amount, source) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+        await pool.query(`INSERT INTO tbltransaction(user_id, description, type, status, amount, source) VALUES($1, $2, $3, $4, $5, $6) RETURNING *`,
         [userId, description, "income", status, amount, source]);
         
         await pool.query("COMMIT")
@@ -184,8 +183,7 @@ export const getDashboard = async (req, res) => {
         let totalIncome = 0;
         let totalExpense = 0;
 
-
-       const result =await pool.query(`SELECT type, SUM(amount) as totalAmount FROM tbltransaction where user_id = $1 GROUP BY type`, [userId]);
+       const result =await pool.query(`SELECT type, SUM(amount) as "totalAmount" FROM tbltransaction where user_id = $1 GROUP BY type`, [userId]);
        const transactions = result.rows;
        
        transactions.forEach((transaction) => {
@@ -199,7 +197,7 @@ export const getDashboard = async (req, res) => {
        const firstDayOfYear = new Date(new Date().getFullYear(), 0, 1);
        const lastDayOfYear = new Date(new Date().getFullYear(), 11, 31);
 
-       const aggregateQuery = await pool.query(`SELECT type, EXTRACT(MONTH FROM createdat) as month, SUM(amount) as totalAmount FROM tbltransaction
+       const aggregateQuery = await pool.query(`SELECT type, EXTRACT(MONTH FROM createdat) as month, SUM(amount) as "totalAmount" FROM tbltransaction
        where user_id = $1 AND createdat BETWEEN $2 AND $3 GROUP BY type, month`, [userId, firstDayOfYear, lastDayOfYear]);
 
        const aggregate = aggregateQuery.rows;

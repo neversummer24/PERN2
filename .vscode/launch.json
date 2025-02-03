@@ -13,7 +13,9 @@
             ],
             "program": "${workspaceFolder}/backend/index.js",
             "env": {
-               "PORT": "3000"
+               "PORT": "3000",
+               "DATABASE_URI" : "postgresql://kun:wSZdAofxhHfKEPmCAZwht0DOnOAAlvlD@dpg-cu9angpu0jms73fd4oeg-a.oregon-postgres.render.com/costapp",
+               "JWT_SECRET": "secret" 
             }
         }
     ]
