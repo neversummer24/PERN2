@@ -4,24 +4,25 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "nodemon --exec vite",    
+    "dev": "nodemon --exec vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
-    "@headlessui/react": "^2.0.3",
+    "@headlessui/react": "^2.2.0",
+    "@heroicons/react": "^2.2.0",
     "@tailwindcss/vite": "^4.0.3",
     "axios": "^1.6.8",
     "clsx": "^2.1.1",
     "file-saver": "^2.0.5",
-    "firebase": "^10.13.0",
+    "firebase": "^10.14.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.1.1",
     "react-hook-form": "^7.51.4",
     "react-icons": "^5.2.1",
-    "react-json-to-excel": "^1.0.7",
+    "react-json-to-excel": "^1.0.8",
     "react-router-dom": "^6.23.1",
     "recharts": "^2.12.7",
     "sonner": "^1.4.41",
@@ -33,6 +34,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
+    
+    "@hookform/resolvers": "^3.10.0",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",

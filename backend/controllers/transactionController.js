@@ -8,22 +8,41 @@ export const getTransactions = async (req, res) => {
         const sevenDaysAgo = new Date(today);
         sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-        const {df,dt,s} = req.query;
+        const {df,dt,s,page=1,limit=10} = req.query;
         const {userId} = req.body.user;
 
         //new Date()  Date对象
         const startDate = df ? new Date(df) : sevenDaysAgo;
         const endDate = dt ? new Date(dt) : today;
 
+        const offset = (page - 1) * limit;
         
-        const result = await pool.query(`SELECT * FROM tbltransaction where  user_id = $1 AND createdat BETWEEN $2 AND $3
-            AND description ILIKE '%' || $4 || '%' OR source ILIKE '%' || $4 || '%' `, 
-            [userId, startDate, endDate,s]);
+        const countQuery = await pool.query(`SELECT COUNT(*) FROM tbltransaction where  user_id = $1 AND createdat BETWEEN $2 AND $3
+        AND description ILIKE '%' || $4 || '%' OR source ILIKE '%' || $4 || '%' `, 
+        [userId, startDate, endDate,s]);
+        const totalItems = countQuery.rows[0].count;
+        const totalPages = Math.ceil(totalItems / limit);
+        
+        const result = await pool.query(
+            `SELECT * FROM tbltransaction 
+            WHERE user_id = $1 
+            AND createdat BETWEEN $2 AND $3
+            AND (description ILIKE '%' || $4 || '%' OR source ILIKE '%' || $4 || '%')
+            ORDER BY createdat DESC
+            LIMIT $5 OFFSET $6`,
+            [userId, startDate, endDate, s, limit, offset]
+        );
         
            
         res.status(200).json({
             status: "success", 
             data: result.rows,
+            pagination: {
+                totalItems,
+                totalPages,
+                currentPage: Number(page),  
+                pageSize: Number(limit),
+            }
         })
     } catch (error) {
         console.log(error);
