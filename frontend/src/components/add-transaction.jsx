@@ -1,16 +1,16 @@
-import { DialogWrapper } from '../wrapper/dialog-wrapper';
+import { DialogWrapper } from './wrapper/dialog-wrapper';
 import { DialogPanel, DialogTitle } from '@headlessui/react';
 
-import { formatCurrency } from '../../libs/numberUtil';
+import { formatCurrency } from '../libs/numberUtil';
 import {useEffect, useState} from 'react';
 import { useForm } from 'react-hook-form';
 import {MdOutlineWarning} from 'react-icons/md';
 import {toast} from 'sonner';
-import api from '../../libs/authApiCall';
-import Loading from '../ui/loading';
-import { Input } from './input';
-import userStore from '../../store';
-import { Button } from './button';
+import api from '../libs/authApiCall';
+import Loading from './ui/loading';
+import { Input } from './ui/input';
+import userStore from '../store';
+import { Button } from './ui/button';
 
 
 const AddTransaction = ({isOpen,setIsOpen,refetch}) => {
@@ -84,13 +84,7 @@ const AddTransaction = ({isOpen,setIsOpen,refetch}) => {
         setIsOpen(false);
     }
 
-    const longDateString = new Date(data?.createdat).toLocaleDateString("en-US", {
-        dateStyle: "full",
-    });
-
-    const longTimeString = new Date(data?.createdat).toLocaleTimeString("en-US", {
-        timeStyle: "short",
-    });
+   
 
     return(
         <DialogWrapper isOpen={isOpen} closeModal={closeModal}>

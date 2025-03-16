@@ -1,17 +1,17 @@
 
 import { useEffect, useState } from 'react';
 import { get, useForm } from 'react-hook-form';
-import userStore from '../../store';
+import userStore from '../store';
 import { toast } from 'sonner';
-import api from '../../libs/authApiCall';
-import { DialogWrapper } from '../wrapper/dialog-wrapper';
+import api from '../libs/authApiCall';
+import { DialogWrapper } from './wrapper/dialog-wrapper';
 import { DialogPanel, DialogTitle } from '@headlessui/react';
 import { MdOutlineWarning } from 'react-icons/md';
-import { Input } from './input'
-import { Button } from './button'
+import { Input } from './ui/input'
+import { Button } from './ui/button'
 import { BiLoader } from 'react-icons/bi';
-import Loading from './loading';
-import { formatCurrency } from '../../libs/numberUtil';
+import Loading from './ui/loading';
+import { formatCurrency } from '../libs/numberUtil';
 
 const accounts = ["cash", "crypto", "visa", "paypal"];
 

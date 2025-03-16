@@ -7,7 +7,7 @@ import { Button } from '../../components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import  userStore  from '../../store/index';  
-import { SocialAuth } from '../../components/ui/social-auth';
+import { SocialAuth } from '../../components/social-auth';
 import { Seperator } from '../../components/ui/seperator';
 import {Input} from '../../components/ui/input';
 import {BiLoader} from 'react-icons/bi';

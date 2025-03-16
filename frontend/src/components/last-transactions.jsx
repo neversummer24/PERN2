@@ -3,7 +3,7 @@ import {IoCheckmarkDoneCircle} from 'react-icons/io5'
 import {RiProgress3Line} from 'react-icons/ri'
 import {TiWarning} from 'react-icons/ti'
 import  {Link} from 'react-router-dom'
-import Title from './title'
+import Title from './ui/title'
 
 const LastTransactions = (data) => {
     return(
@@ -26,7 +26,7 @@ const LastTransactions = (data) => {
                     </thead>
 
                     <tbody>
-                        {data?.map((item,index) => (
+                        {Array.isArray(data) && data.length > 0 && data?.map((item,index) => (
                             <tr key={index} className="border-b border-gray-300 dark:border-gray-600 text-sm hover:bg-gray-100 dark:hover:bg-gray-700">
                                 <td className="py-4"> {new Date(item.createdAt).toLocaleDateString()} </td>
 

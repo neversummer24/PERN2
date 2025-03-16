@@ -161,7 +161,7 @@ const Navbar = () => {
             <div className="smd:block">
                 <div className="flex items-center space-x-4">
                     {links.map((link) => (
-                        <Link to={link.link} className="text-sm font-semibold text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-white">    
+                        <Link to={link.link} key={link.label} className="text-sm font-semibold text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-white">    
                             {link.label}    
                         </Link>
                     ))}

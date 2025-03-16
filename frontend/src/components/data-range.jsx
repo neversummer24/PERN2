@@ -1,6 +1,6 @@
 import React , {useEffect , useState }from 'react'
 import { useSearchParams } from 'react-router-dom'
-import {getDateSevenDaysAgo} from '../../libs/numberUtil'
+import {getDateSevenDaysAgo} from '../libs/numberUtil'
 
 const DataRange = () => {
     const sevenDaysAgo = getDateSevenDaysAgo();

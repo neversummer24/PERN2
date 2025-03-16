@@ -11,12 +11,12 @@ import { BiLoader } from 'react-icons/bi';
 import Loading from '../components/ui/loading';
 import { MdAdd, MdVerifiedUser } from 'react-icons/md';
 import Title from '../components/ui/title';
-import Accounts from '../components/ui/accounts';
-import AccountMenu from '../components/ui/account-menu';
+import Accounts from '../components/accounts';
+import AccountMenu from '../components/account-menu';
 import { maskAccountNumber, formatCurrency } from '../libs/numberUtil';
-import AddAccount from '../components/ui/add-account';
-import AddMoney from '../components/ui/add-money';
-import TransferMoney from '../components/ui/transfer-money';
+import AddAccount from '../components/add-account';
+import AddMoney from '../components/add-money';
+import TransferMoney from '../components/transfer-money';
 
 
 const ICONS = {

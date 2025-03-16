@@ -4,8 +4,8 @@ import {GiCash} from 'react-icons/gi'
 import {RiVisaLine} from 'react-icons/ri'
 import {Link} from 'react-router-dom'
 
-import {formatCurrency, maskAccountNumber} from "../../libs/numberUtil";
-import Title from "./title";
+import {formatCurrency, maskAccountNumber} from "../libs/numberUtil";
+import Title from "./ui/title";
 
 const ICONS  = {
     crypto:(<div className="w-12 h-12 bg-amber-600 text-white flex items-center justify-venter rounded-full">
@@ -26,7 +26,7 @@ const Accounts = ({data}) => {
     return (
         <div className ="mt-20 md:mt-0 py-5 md:py-20 w-full md:w-1/3">
             <Title>Accounts</Title>
-            <Link to="/accounts" className="text-sm font-semibold text-gray-600 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-white">See all</Link>
+            <Link to="/account" className="text-sm font-semibold text-gray-600 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-white">See all</Link>
 
             <div className= "w-full">
                 {data?.map((item,index) => (

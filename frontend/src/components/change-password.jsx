@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import api from "../../libs/authApiCall";
+import api from "../libs/authApiCall";
 import { toast } from "sonner";
-import { Input } from "./input";
+import { Input } from "./ui/input";
 import { BiLoader } from 'react-icons/bi';
-import { Button } from "./button";
+import { Button } from "./ui/button";
 
 
 export const ChangePassword = () => {

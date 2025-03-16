@@ -8,14 +8,14 @@ import { MdAdd } from 'react-icons/md';
 import { IoSearchOutline } from 'react-icons/io5';
 import { CiExport } from 'react-icons/ci';
 import { exportToExcel } from 'react-json-to-excel';
-import DataRange from '../components/ui/data-range';
+import DataRange from '../components/data-range';
 import { formatCurrency } from '../libs/numberUtil';
 import { RiProgress3Line } from 'react-icons/ri';
 import { TiWarning } from 'react-icons/ti';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
 import { AiOutlineEye } from 'react-icons/ai';
-import ViewTransaction from '../components/ui/view-transaction';
-import AddTransaction from '../components/ui/add-transaction';
+import ViewTransaction from '../components/view-transaction';
+import AddTransaction from '../components/add-transaction';
 import TablePagination from '../components/ui/table-pagination';
 
 

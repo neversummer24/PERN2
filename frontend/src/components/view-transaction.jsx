@@ -1,7 +1,7 @@
-import { DialogWrapper } from '../wrapper/dialog-wrapper';
+import { DialogWrapper } from './wrapper/dialog-wrapper';
 import { DialogPanel, DialogTitle } from '@headlessui/react';
 
-import { formatCurrency } from '../../libs/numberUtil';
+import { formatCurrency } from '../libs/numberUtil';
 import {PiSealCheckFill} from 'react-icons/pi';
 
 const ViewTransaction = ({data,isOpen,setIsOpen}) => {

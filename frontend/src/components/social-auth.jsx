@@ -11,10 +11,10 @@ import {FcGoogle} from 'react-icons/fc'
 import {FaGithub} from 'react-icons/fa'
 import { useNavigate } from "react-router-dom";
 import {toast} from 'sonner'
-import api from "../../libs/authApiCall"
-import {auth} from "../../libs/firebaseConfig"
-import {Button} from "../ui/button"
-import  userStore  from "../../store";
+import api from "../libs/authApiCall"
+import {auth} from "../libs/firebaseConfig"
+import {Button} from "./ui/button"
+import  userStore  from "../store";
 import { set } from "zod";
 
 

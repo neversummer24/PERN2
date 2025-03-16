@@ -3,7 +3,7 @@ import { BiTransfer } from 'react-icons/bi';
 import {FaMoneyCheck} from 'react-icons/fa';
 import { MdMoreVert } from 'react-icons/md';
 import clsx from 'clsx';
-import {TransitionWrapper} from '../wrapper/transition-wrapper';
+import {TransitionWrapper} from './wrapper/transition-wrapper';
 
 export default function AccountMenu( {transferMoney, addMoney} ) {
     return <>

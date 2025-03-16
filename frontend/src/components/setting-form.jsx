@@ -1,17 +1,17 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import userStore from '../../store/index';
+import userStore from '../store/index';
 import { useState } from 'react';
 import { Combobox, Transition, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions } from "@headlessui/react";
 import { BsChevronExpand } from 'react-icons/bs';
 import { Fragment } from 'react';
 import { useEffect } from 'react';
-import { fetchCountries } from '../../libs/fetchCountries';
-import api from '../../libs/authApiCall';
+import { fetchCountries } from '../libs/fetchCountries';
+import api from '../libs/authApiCall';
 import { toast } from 'sonner';
 import { BiCheck, BiLoader } from 'react-icons/bi';
-import { Input } from './input';
-import { Button } from "./button";
+import { Input } from './ui/input';
+import { Button } from "./ui/button";
 
 
 

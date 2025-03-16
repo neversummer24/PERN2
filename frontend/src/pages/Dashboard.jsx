@@ -6,8 +6,8 @@ import Loading from '../components/ui/loading'
 import api  from '../libs/authApiCall'
 import Chart from '../components/ui/chart'
 import CircleChart from '../components/ui/piechart'
-import Accounts from '../components/ui/accounts'
-import LastTransactions from '../components/ui/last-transactions'
+import Accounts from '../components/accounts'
+import LastTransactions from '../components/last-transactions'
 
 
 

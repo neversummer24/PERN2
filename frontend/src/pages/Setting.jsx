@@ -1,7 +1,7 @@
 import React from 'react'
 import Title from '../components/ui/title';
-import {SettingForm} from '../components/ui/setting-form';
-import { ChangePassword } from '../components/ui/change-password';
+import {SettingForm} from '../components/setting-form';
+import { ChangePassword } from '../components/change-password';
 import userStore from '../store';
 
 

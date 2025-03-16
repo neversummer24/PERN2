@@ -1,14 +1,14 @@
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import userStore from '../../store';
+import userStore from '../store';
 import { toast } from 'sonner';
-import api from '../../libs/authApiCall';
-import { DialogWrapper } from '../wrapper/dialog-wrapper';
+import api from '../libs/authApiCall';
+import { DialogWrapper } from './wrapper/dialog-wrapper';
 import { DialogPanel, DialogTitle } from '@headlessui/react';
 import { MdOutlineWarning } from 'react-icons/md';
-import {Input} from './input'
-import {Button} from './button'
+import {Input} from './ui/input'
+import {Button} from './ui/button'
 import { BiLoader } from 'react-icons/bi';
 
 

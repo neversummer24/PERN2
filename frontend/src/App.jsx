@@ -18,7 +18,6 @@ const RootlayOut = () => {
 
   setAuthToken(user?.token ?? "");
 
-
   return !user ? (
     <Navigate to="/sign-in" replace />
   ) : (
