@@ -32,15 +32,13 @@ const UserMenu = () => {
         <Menu.Button className=''>
           <div className='flex items-center gap-2'>
             <div className='w-10 2xl:w-12 h-10 2xl:h-12 rounded-full text-white bg-violet-600 cursor-pointer flex items-center justify-center'>
-              <p className='text-2xl font-bold'>{user?.firstname?.charAt(0)}</p>
+              <p className='text-2xl font-bold'>{user?.firstname?.charAt(0).toUpperCase()}</p>
             </div>
             <div className='hidden md:block text-left'>
               <p className='text-lg font-medium text-black dark:text-gray-400'>
                 {user?.firstname}
               </p>
-              <span className='text-sm text-gray-700 dark:text-gray-500'>
-                {user?.email}
-              </span>
+           
             </div>
             <MdOutlineKeyboardArrowDown className='hidden md:block text-2xl text-gray-600 dark:text-gray-300 cursor-pointer' />
           </div>
