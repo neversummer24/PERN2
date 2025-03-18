@@ -1,5 +1,4 @@
 // components/Card.jsx
-import React from "react";
 import clsx from "clsx";
 
 export const Card = ({ className, children, ...props }) => (

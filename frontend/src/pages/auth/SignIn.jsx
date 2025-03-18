@@ -119,7 +119,7 @@ const SignIn = () => {
         </div>
 
         <CardFooter className='justify-center gap-2'>
-          <p className='text-sm text-muted-foreground'>Don't have an account?</p>
+          <p className='text-sm text-muted-foreground'>{`Don't have an account?`}</p>
           <Link 
             to="/sign-up" 
             className='text-sm font-semibold text-violet-500 hover:underline'

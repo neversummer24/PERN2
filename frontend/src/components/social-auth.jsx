@@ -2,23 +2,21 @@ import {
     GithubAuthProvider,
     GoogleAuthProvider,
     signInWithPopup,
-    signInWithRedirect
-  } from "firebase/auth";
-
-import React, {useEffect, useState} from 'react'
-import {useAuthState}   from 'react-firebase-hooks/auth';
-import {FcGoogle} from 'react-icons/fc'
-import {FaGithub} from 'react-icons/fa'
+} from "firebase/auth";
+import { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { FcGoogle } from 'react-icons/fc';
+import { FaGithub } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
-import {toast} from 'sonner'
-import api from "../libs/authApiCall"
-import {auth} from "../libs/firebaseConfig"
-import {Button} from "./ui/button"
-import  userStore  from "../store";
-import { set } from "zod";
+import { toast } from 'sonner';
+import api from "../libs/authApiCall";
+import { auth } from "../libs/firebaseConfig";
+import { Button } from "./ui/button";
+import userStore from "../store";
 
 
-export const SocialAuth = ({isLoading,setLoading}) => {
+
+export const SocialAuth = ({ loading, setLoading }) => {
     const [userFromFirebase] = useAuthState(auth);
     const [selectedProvider, setSelectedProvider] = useState("google");
     const setUser = userStore((state) => state.setUser);
@@ -26,26 +24,27 @@ export const SocialAuth = ({isLoading,setLoading}) => {
 
     const signInWithGoogle = async () => {
         try {
-          const provider = new GoogleAuthProvider();
-          setSelectedProvider("google");
-          const res = await signInWithPopup(auth, provider);
-          console.log("signInWithGoogle res",res);
+            const provider = new GoogleAuthProvider();
+            setSelectedProvider("google");
+            const res = await signInWithPopup(auth, provider);
+            console.log("signInWithGoogle res", res);
         } catch (error) {
-          console.error("error sign in with google",error);
+            console.error("error sign in with google", error);
         }
     };
-    
+
     const signInWithGithub = async () => {
         try {
             const provider = new GithubAuthProvider();
             setSelectedProvider("github");
             const res = await signInWithPopup(auth, provider);
+            console.log("signInWithGithub res", res);
         } catch (error) {
-            console.error("error sign in with github",error);
+            console.error("error sign in with github", error);
         }
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         const saveUserInfo = async () => {
             try {
                 const userData = {
@@ -57,13 +56,13 @@ export const SocialAuth = ({isLoading,setLoading}) => {
 
                 setLoading(true);
 
-                const {data:res} = await api.post("/auth/sign-in", userData);
-                console.log("socail auth sign in res:",res);
+                const { data: res } = await api.post("/auth/sign-in", userData);
+                console.log("------socail auth sign in:", res);
 
 
-                if(res?.user){
+                if (res?.user) {
                     toast.success(res?.message);
-                    const userInfo = {token: res?.user?.token, ...res?.user};
+                    const userInfo = { token: res?.user?.token, ...res?.user };
 
                     localStorage.setItem("user", JSON.stringify(userInfo));
                     setUser(userInfo);
@@ -73,40 +72,40 @@ export const SocialAuth = ({isLoading,setLoading}) => {
                     }, 1000);
                 }
             } catch (error) {
-                console.error("error in useEffect in sign up",error);
-            } finally{
+                console.error("error in useEffect in sign up", error);
+            } finally {
                 setLoading(false);
             }
-        };
+        }
 
-        if(userFromFirebase){
+        if (userFromFirebase) {
             saveUserInfo();
         }
 
-    },[userFromFirebase?.uid]);
+    }, [userFromFirebase?.uid]);
 
-    return(
+    return (
         <div className="flex items-center gap-2">
-            <Button 
-                onClick={signInWithGoogle} 
-                disabled={isLoading}
+            <Button
+                onClick={signInWithGoogle}
+                disabled={loading}
                 variant='outline'
                 className='w-full text-sm font-normal dark:bg-transparent dark:boarder-gray-800 dark:text-gray-400'
-                type='button'> 
-                   <FcGoogle className="mr-2 size-5" />Continue with Google
-            </Button>       
+                type='button'>
+                <FcGoogle className="mr-2 size-5" />Google
+            </Button>
 
-             {/* <Button 
-                onClick={signInWithGithub} 
-                disabled={isLoading}
+            <Button
+                onClick={signInWithGithub}
+                disabled={loading}
                 variant='outline'
                 className='w-full text-sm font-normal dark:bg-transparent dark:boarder-gray-800 dark:text-gray-400'
-                type='button'> 
-                   <FaGithub className="mr-2 size-5" />Github
-            </Button>     */}
-        </div>    
+                type='button'>
+                <FaGithub className="mr-2 size-5" />Github
+            </Button>
+        </div>
     )
 
 
-   
+
 }    

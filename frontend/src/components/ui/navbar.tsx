@@ -1,182 +1,167 @@
-import{
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuItems,
-    Popover,
-    PopoverButton,
-    PopoverPanel,
-} from '@headlessui/react'
+import { Menu, Popover } from "@headlessui/react";
+import React, { useState } from "react";
+import { MdOutlineClose, MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { RiCurrencyFill } from "react-icons/ri";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import userStore from '../../store/index'
-import React, { useState } from 'react'
-import {MdOutlineClose, MdOutlineKeyboardArrowDown} from 'react-icons/md'
-
-import {Link, useLocation, useNavigate} from 'react-router-dom'
-
-import {IoIosMenu} from 'react-icons/io'
-import {auth} from '../../libs/firebaseConfig'
-import { ThemeSwitch } from './switch'
-import {TransitionWrapper} from '../wrapper/transition-wrapper'
-
+import { IoIosMenu } from "react-icons/io";
+import userStore from "../../store/index";
+import {ThemeSwitch} from "./switch";
+import {TransitionWrapper} from "../wrapper/transition-wrapper";
 
 const links = [
-    {label:"Dashboard",link:"/dashboard"},
-    {label:"Account",link:"/account"},
-    {label:"Transaction",link:"/transaction"},
-    {label:"Setting",link:"/setting"},
+  { label: "Dashboard", link: "/dashboard" },
+  { label: "Transaction", link: "/transaction" },
+  { label: "Account", link: "/account" },
+  { label: "Setting", link: "/setting" },
 ];
 
-
-
-
 const UserMenu = () => {
-    const logout = userStore((state) => state.logout);
-    
-    const {user, setUser} = userStore((state) => state);
-    const navigate = useNavigate();
+  const { user, setCredentails } = userStore((state) => state);
+  const navigate = useNavigate();
 
-    const handleSocialLogout = async () => {
-         try{
-            await logout(auth);
-         }catch(error){
-            console.log("error in social logout",error);
-         }   
-    }
+  const handleSingout = () => {
+    localStorage.removeItem("user");
+    setCredentails(null);
+    navigate("/sign-in");
+  };
 
-    const handleLogout = async () => {
-        if(user.provideer === "google"){
-            await handleSocialLogout();
-        }else   {
-           await logout();
-        }
-        setUser(null);
-        navigate("/sign-in");  
-    }
-
-
-    return(
-        <Menu as = "div" className="relative z-50">
-            <div>
-                <MenuButton className="">
-                    <div className="flex items-center gap-2">
-                        <div className="flex items-center justify-center w-10 h-10 text-white rounded-full
-                        cursor-pointer 2xl:w-12 2xl:h-12 ">
-                            <p className = "text-2xl font-semibold">User</p>
-                        </div>
-                        <p className = "hidden text-sm font-semibold md:block">{user?.name}</p>
-                        <MdOutlineKeyboardArrowDown className = "hidden md:block text-2xl text-gray-600 cursor-pointer dark:text-gray-300"/>
-                    </div>
-
-                </MenuButton>
+  return (
+    <Menu as='div' className='relative  z-50'>
+      <div>
+        <Menu.Button className=''>
+          <div className='flex items-center gap-2'>
+            <div className='w-10 2xl:w-12 h-10 2xl:h-12 rounded-full text-white bg-violet-600 cursor-pointer flex items-center justify-center'>
+              <p className='text-2xl font-bold'>{user?.firstname?.charAt(0)}</p>
             </div>
-
-            <TransitionWrapper>
-                <MenuItems className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg
-                ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <div className="px-4 py-3">
-                        <p className = "text-sm font-semibold">{user?.name}</p>
-                        <p className = "text-sm text-gray-600">{user?.email}</p>
-                    </div>
-                    <div className="py-1">
-                        {links.map((link) => (
-                            <MenuItem key={link.label}>
-                                <Link to={link.link} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
-                                    {link.label}
-                                </Link>
-                            </MenuItem>
-                        ))} 
-                    </div>
-                    <div className="py-1">
-                        <MenuItem>
-                            <button onClick={handleLogout} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
-                                Logout
-                            </button>
-                        </MenuItem>
-                    </div>
-                </MenuItems>
-            </TransitionWrapper>
-        </Menu>
-    )
-}
+            <div className='hidden md:block text-left'>
+              <p className='text-lg font-medium text-black dark:text-gray-400'>
+                {user?.firstname}
+              </p>
+              <span className='text-sm text-gray-700 dark:text-gray-500'>
+                {user?.email}
+              </span>
+            </div>
+            <MdOutlineKeyboardArrowDown className='hidden md:block text-2xl text-gray-600 dark:text-gray-300 cursor-pointer' />
+          </div>
+        </Menu.Button>
+      </div>
+      <TransitionWrapper>
+        <Menu.Items className='absolute z-50 right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white dark:bg-slate-800  shadow-lg ring-1 ring-black/5 focus:outline-none'>
+          <div className='px-1 py-1 '>
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  onClick={handleSingout}
+                  className={`${
+                    active
+                      ? "bg-violet-500/10 text-gray-900 dark:text-white"
+                      : "text-gray-900 dark:text-gray-500"
+                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                >
+                  Sign Out
+                </button>
+              )}
+            </Menu.Item>
+          </div>
+        </Menu.Items>
+      </TransitionWrapper>
+    </Menu>
+  );
+};
 
 const MobileSidebar = () => {
-    const location = useLocation();
-    const path = location.pathname;
-    const logout = userStore((state) => state.logout);
+  const location = useLocation();
+  const path = location.pathname;
 
-    return(
-        <div className="">
-            <Popover className="">
-                {({open}) => (
-                    <>
-                        <PopoverButton className="flex items-center justify-center w-10 h-10 text-white rounded-full cursor-pointer
-                        md:hidden">
-                            {open ? <MdOutlineClose className="text-2xl"/> : <IoIosMenu className="text-2xl"/>}
-                      
-                        </PopoverButton>
-                        <TransitionWrapper>
-                            <PopoverPanel className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg
-                            ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                <div className="px-4 py-3">
-                                    <p className = "text-sm font-semibold">Welcome {userStore((state) => state.user?.name)}</p>
-                                </div>
-                                <div className="py-1">
-                                    {links.map((link) => (  
-                                        <MenuItem key={link.label}>
-                                            <Link to={link.link} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
-                                                {link.label}
-                                                <PopoverButton className="flex items-center justify-center w-10 h-10 text-white rounded-full cursor-pointer
-                                                md:hidden">
-                                                    {open ? <MdOutlineClose className="text-2xl"/> : <IoIosMenu className="text-2xl"/>}
-                                                </PopoverButton>
-                                            </Link>
-                                        </MenuItem>
-                                    ))}
-                                </div>
-                                <div className="py-1">
-                                    <MenuItem>
-                                        <button onClick={logout} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
-                                            Logout
-                                        </button>
-                                    </MenuItem>
-                                </div>
-                            </PopoverPanel>
-                        </TransitionWrapper>
-                    </>
-                )} 
-            </Popover>
-        </div>
-    )
-}
+  return (
+    <div className=''>
+      <Popover className=''>
+        {({ open }) => (
+          <>
+            <Popover.Button
+              className={`
+               flex md:hidden items-center rounded-md font-medium focus:outline-none text-gray-600 dark:text-gray-400`}
+            >
+              {open ? <MdOutlineClose size={26} /> : <IoIosMenu size={26} />}
+            </Popover.Button>
+            <TransitionWrapper>
+              <Popover.Panel className='absolute left-1/2 z-50 bg-white dark:bg-slate-800 mt-3 w-screen max-w-sm -translate-x-1/2 transform px-4 py-6'>
+                <div className='flex flex-col space-y-2'>
+                  {links.map(({ label, link }, index) => (
+                    <Link to={link} key={index}>
+                      <Popover.Button
+                        className={`${
+                          link === path
+                            ? "bg-black dark:bg-slate-900 text-white"
+                            : "text-gray-700 dark:text-gray-500"
+                        } w-1/2 px-6 py-2 rounded-full text-left`}
+                      >
+                        {label}
+                      </Popover.Button>
+                    </Link>
+                  ))}
 
+                  <div className='flex items-center justify-between py-6 px-4'>
+                    <Popover.Button>
+                      <ThemeSwitch />
+                    </Popover.Button>
+                    <UserMenu />
+                  </div>
+                </div>
+              </Popover.Panel>
+            </TransitionWrapper>
+          </>
+        )}
+      </Popover>
+    </div>
+  );
+};
 
 const Navbar = () => {
-    return (
-        <div className="flex items-center justify-between px-4 py-3 bg-blue-100 dark:bg-gray-800">
-            <div className="flex items-center">
-                <p className = "text-2xl font-semibold text-gray-600 dark:text-gray-300">My Finance</p>
-            </div>
+  const location = useLocation();
+  const path = location.pathname;
+  const [openSidebar, setOpenSidebar] = useState(false);
 
-            <div className="smd:block">
-                <div className="flex items-center space-x-4">
-                    {links.map((link) => (
-                        <Link to={link.link} key={link.label} className="text-sm font-semibold text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-white">    
-                            {link.label}    
-                        </Link>
-                    ))}
-                </div>
-            </div>
-
-            
-            <div className="flex items-center">
-                <UserMenu/>
-                {/* <MobileSidebar/> */}
-                <ThemeSwitch/>
-            </div>
+  return (
+    <div className='w-full flex items-center justify-between py-6'>
+      <Link to='/'>
+        <div className='flex items-center gap-2 cursor-pointer'>
+          <div className='w-10 md:w-12 h-10 md:h-12 flex items-center justify-center bg-violet-700 rounded-xl'>
+            <RiCurrencyFill className='text-white text-3xl hover:animate-spin' />
+          </div>
+          <span className='text-xl font-bold text-black dark:text-white'>
+            My-Finance
+          </span>
         </div>
-    )
-  };
-  
-  export default Navbar;
+      </Link>
 
+      <div className='hidden md:flex items-center gap-4'>
+        {links.map(({ label, link }, index) => (
+          <div
+            key={index}
+            className={`${
+              link === path
+                ? "bg-black dark:bg-slate-800 text-white"
+                : "text-gray-700 dark:text-gray-500"
+            } px-6 py-2 rounded-full`}
+          >
+            <Link to={link}>{label}</Link>
+          </div>
+        ))}
+      </div>
+
+      <div className='hidden md:flex items-center gap-10 2xl:gap-20'>
+        <ThemeSwitch />
+
+        <UserMenu />
+      </div>
+
+      <div className='flex md:hidden'>
+        <MobileSidebar />
+      </div>
+    </div>
+  );
+};
+
+export default Navbar;

@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+
 import clsx from "clsx";
 
 const sizeClasses = {
@@ -7,8 +7,8 @@ const sizeClasses = {
   lg: "h-11 px-4 py-3",
 };
 
-export const Input = forwardRef(
-  ({ id, label, error, size = "default", className, ...props }, ref) => {
+export const Input = 
+  ({ id, label, error, size = "default", className,ref, ...props }) => {
     return (
       <div className="space-y-2 w-ful">
         {label && (
@@ -36,7 +36,7 @@ export const Input = forwardRef(
       </div>
     );
   }
-);
+
 
 Input.displayName = "Input";
 
