@@ -10,13 +10,14 @@ const DataRange = () => {
     const [startDate, setStartDate] = useState(()=>{
         const df = searchParams.get("df");
 
-        return df && new Date(df).getTime() <= new Date().getTime() ? new Date(df) : sevenDaysAgo                                                                                                                                                                      
+        return df && new Date(df).getTime() <= new Date().getTime() ? df: sevenDaysAgo 
+        || new Date().toISOString().split("T")[0];                                                                                                                                                                     
     });
 
     const [endDate, setEndDate] = useState(()=>{
         const dt = searchParams.get("dt");
 
-        return dt && new Date(dt).getTime() >= new Date().getTime() ? new Date(dt) : new Date();
+        return dt && new Date(dt).getTime() >= new Date().getTime() ? dt : new Date().toISOString().split("T")[0];
     });
 
     useEffect(()=>{
@@ -24,11 +25,21 @@ const DataRange = () => {
     },[startDate, endDate]);
     
     const handleStartDateChange = (e) => {
-        setStartDate(e.target.value);
+        const df = e.target.value;
+        setStartDate(df);
+
+        if(new Date(df).getTime() > new Date(endDate).getTime()){
+            setEndDate(df);
+        }
     }
 
     const handleEndDateChange = (e) => {
-        setEndDate(e.target.value);  
+        const dt = e.target.value;
+        setEndDate(dt);
+
+        if(new Date(dt).getTime() < new Date(startDate).getTime()){
+            setStartDate(dt);
+        }
     }
 
     return(
